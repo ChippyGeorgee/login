@@ -29,10 +29,13 @@
 								<h3 id="login_heading"> <b>Login</b></h3>
                 <div class="row">
                 <input type="text" class="form-control" placeholder="Email" id="email"/>
+                <span style="color:red;visibility:hidden;" id="error_email">Please enter email</span>
+
 
                 </div>
                 <div class="row">
                 <input type="password"class="form-control"  placeholder="Password" id="password"/>
+                <span style="color:red;visibility:hidden;" id="error_password">Please enter password</span>
 
                 </div>
                 <div class="row"><p style="color:red;visibility:hidden;" id="error">Invalid credentials</p></div>
@@ -57,15 +60,32 @@
 </body>
 </html>
 <script>
+   $("#email").keyup(function(){
+        var email = $("#email").val();
+        $("#error_email").css("visibility","hidden");
+        var mailformat = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(email.match(mailformat))
+        {
+        console.log("matched")
+        }
+        else{
+            $("#error_email").css("visibility","visible");
+            $("#error_email").html("Please enter a valid email address");
+        }
+    })
     $('#login').click(function(){
    var email = $("#email").val();
    var password = $("#password").val();
    if(email==""){
-
+    $("#error_email").html("Please enter email")
+        $("#error_email").css("visibility","visible")
+                
    }
    if(password==""){
+    $("#error_password").css("visibility","visible")
 
    }
+
 
    if(email !="" && password!=""){
     $.ajax({
